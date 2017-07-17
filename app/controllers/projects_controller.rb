@@ -33,12 +33,15 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+        @project.update_column :user_id, current_user.id
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
+
+
     end
   end
 
@@ -74,6 +77,7 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
+      params[:user_id] = current_user.id
       params.require(:project).permit(:name, :description, :user_id)
     end
 end
