@@ -1,0 +1,11 @@
+<% if @project.user_id == current_user.id %>
+<h1>Editing Project</h1>
+
+<%= render 'form', project: @project %>
+
+<%= link_to 'Show', @project %> |
+<%= link_to 'Back', projects_path %>
+<% else %>
+<h1>You are not allowed to visit this page</h1>   
+<%= link_to 'Back', projects_path %>
+<% end %>
