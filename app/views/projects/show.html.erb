@@ -1,6 +1,6 @@
 <% if @project.user_id == current_user.id %>
 <p id="notice"><%= notice %></p>
-
+<div class="form-inputs">
 <p>
   <strong>Name:</strong>
   <%= @project.name %>
@@ -10,10 +10,11 @@
   <strong>Description:</strong>
   <%= @project.description %>
 </p>
+</div>
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Edit', edit_project_path(@project), :class => 'btn btn-xs btn-default' %>
+<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>
 <% else %>
 <h1>You are not allowed to visit this page</h1>   
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>
 <% end %>

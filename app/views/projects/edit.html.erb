@@ -3,9 +3,9 @@
 
 <%= render 'form', project: @project %>
 
-<%= link_to 'Show', @project %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Show', @project, :class => 'btn btn-xs btn-default' %>
+<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>
 <% else %>
 <h1>You are not allowed to visit this page</h1>   
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>
 <% end %>
