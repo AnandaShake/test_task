@@ -32,7 +32,8 @@
         <p><%= current_user.email %></p>
         <%=link_to 'Sign out', sign_out_path, :class => 'btn btn-default', method: :delete %>
         <% else %>
-        <%=link_to 'Sign in', sign_in_path, :class => 'btn btn-success' %></button>
+        <%=link_to 'Sign in', sign_in_path, :class => 'btn btn-default' %></button>
+        <%=link_to 'Sign up', sign_up_path, :class => 'btn btn-success' %></button>
         <% end %>
         </ul>
         </div><!--/.nav-collapse -->
