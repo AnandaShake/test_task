@@ -23,6 +23,10 @@ class TasklistsController < ApplicationController
 		@project = Project.find(params[:project_id])
 		@tasklist = @project.tasklists.find(params[:id])
 		@tasklist.destroy
+		@task = Task.where(tasklist_id: params[:id]).to_a
+		@task.each do |task|
+			task.destroy
+		end
 		redirect_to project_path(@project)
 	end
 
