@@ -1,7 +1,7 @@
 <h3>Tasklists</h3>
 <% @project.tasklists.each do |tasklist| %>
  <div class="well">
-<p><strong><%= tasklist.name %></strong>
+<p><strong><%= link_to tasklist.name, [tasklist.project, tasklist] %></strong>
 	<%= link_to '[X]', [tasklist.project, tasklist],
 				method: :delete,
 				data: {confirm: 'You sure you want to delete this?'} %>

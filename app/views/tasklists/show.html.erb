@@ -1,0 +1,14 @@
+<% if @project.user_id == current_user.id %>
+<p id="notice"><%= notice %></p>
+<div class="form-inputs">
+<h3>
+  <strong>Name:</strong>
+  <%= @tasklist.name %>
+</h3>
+</div>
+<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>
+<hr>
+<% else %>
+<h1>You are not allowed to visit this page</h1>   
+<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>
+<% end %>
