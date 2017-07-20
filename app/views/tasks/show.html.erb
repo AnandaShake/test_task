@@ -9,6 +9,10 @@
   <strong>Description:</strong>
   <%= @task.description %>
 </p>
+<% if @task.file? %>
+<p>Attached files</p>
+<%=link_to "File", @task.file.url %>
+<% end %>
 </div>
 <h4>Assigned users:</h4>
 <%# @user = User.all.select(:email).map(&:email) %>
@@ -25,7 +29,7 @@
     <%= f.hidden_field :task_id, value: params[:id] %>
     <%= f.submit %>
   </div>
-  <% end %>
+<% end %>
 <br>
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>

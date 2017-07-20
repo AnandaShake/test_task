@@ -28,11 +28,17 @@
   <div class="form-inputs">
     <%= f.input :name %>
     <%= f.input :description %>
+
     <%= f.hidden_field :tasklist_id, value: params[:id] %>
     <%= f.hidden_field :project_id, value: params[:project_id] %>
   </div>
 
   <div class="form-actions">
+    <h4>Attach file</h4>
+    <div class="form-group">
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+    </div>
     <%= f.button :submit %>
   </div>
 <% end %>
