@@ -2,11 +2,9 @@ class UserAssignsController < ApplicationController
 	before_action :require_login
 
 	def create
-		@user_assign = UserAssign.new
-	end
-
-	def new
     	@user_assign = UserAssign.new(user_assign_params)
+	def new
+    	@user_assign = UserAssign.new
   	end
 
 	def show

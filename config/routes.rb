@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :tasks
+  resources :tasks 
+  resources :user_assigns
+
   resources :projects do 
     resources :tasklists
     end
