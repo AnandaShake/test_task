@@ -36,8 +36,8 @@
   <div class="form-actions">
     <h4>Attach file</h4>
     <div class="form-group">
-    <%= f.label :file %>
-    <%= f.file_field :file %>
+    <%= f.label :files %>
+    <%= f.file_field :files, multiple: true %>
     </div>
     <%= f.button :submit %>
   </div>

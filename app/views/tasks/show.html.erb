@@ -9,9 +9,11 @@
   <strong>Description:</strong>
   <%= @task.description %>
 </p>
-<% if @task.file? %>
+<% if @task.files? %>
 <p>Attached files</p>
-<%=link_to "File", @task.file.url %>
+<% @task.files.each do |file| %>
+<%=link_to "File", file.url %>
+<% end %>
 <% end %>
 </div>
 <h4>Assigned users:</h4>

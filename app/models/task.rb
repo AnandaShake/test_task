@@ -1,4 +1,4 @@
 class Task < ApplicationRecord
-	mount_uploader :file, FileUploader
+	mount_uploaders :files, FileUploader
 	has_many :users, through: :user_assigns
 end
