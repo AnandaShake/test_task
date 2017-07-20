@@ -1,15 +1,33 @@
 <p id="notice"><%= notice %></p>
-
-<p>
+<div class="form-inputs">
+<h3>
   <strong>Name:</strong>
   <%= @task.name %>
-</p>
+</h3>
 
 <p>
   <strong>Description:</strong>
   <%= @task.description %>
 </p>
-
-
+</div>
+<h4>Assigned users:</h4>
+<%# @user = User.all.select(:email).map(&:email) %>
+<%# @users_assigns = UserAssign.where(:task_id params[:id]) %>
+<%# @users_assigns.each do |u| %>
+<%#= u %>
+<br>
+<%# end %> 
+<br>
+<h4>Assign users</h4>
+<%= fields_for(UserAssign.new) do |f| %>
+  <div class="form-inputs">
+	<%= collection_select(:user, :id, User.all, :id, :email, {}, {:multiple => true}) %>
+    <%= f.hidden_field :task_id, value: params[:id] %>
+    <%= f.submit %>
+  </div>
+  <% end %>
+<br>
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
+
+
