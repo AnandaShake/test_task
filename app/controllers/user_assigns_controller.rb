@@ -3,6 +3,9 @@ class UserAssignsController < ApplicationController
 
 	def create
     	@user_assign = UserAssign.new(user_assign_params)
+    	@user_assign.save
+    end
+
 	def new
     	@user_assign = UserAssign.new
   	end
@@ -21,9 +24,9 @@ class UserAssignsController < ApplicationController
 	end
 
 	private
+
 	def user_assign_params
 		params.require(:user_assign).permit(:user_id, :task_id)
 	end
-end
 
 end
