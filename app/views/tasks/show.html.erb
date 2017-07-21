@@ -17,13 +17,15 @@
 <% end %>
 </div>
 <h4>Assigned users:</h4>
-<%# @user = User.all.select(:email).map(&:email) %>
-<%# @users_assigns = UserAssign.where(:task_id params[:id]) %>
-<%# @users_assigns.each do |u| %>
-<%#= u %>
-<br>
-<%# end %> 
-<br>
+<%#@user = User.all.select(:email).map(&:email) %>
+<% @user_assigns = UserAssign.where(task_id: params[:id]) %>
+<% @user_assigns.each do |u| %>
+<% @user = User.where(id: u.user_id) %>
+<% @user.each do |user| %>
+<p><%= user.email %></p>
+<% end %> 
+<% end %> 
+<b>
 <h4>Assign user</h4>
 <%= form_for UserAssign.new do |f| %>
   <div class="form-inputs">
