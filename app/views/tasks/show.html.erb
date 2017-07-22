@@ -1,48 +1,67 @@
-<p id="notice"><%= notice %></p>
-<div class="form-inputs">
-<h3>
-  <strong>Name:</strong>
-  <%= @task.name %>
-</h3>
-
-<p>
-  <strong>Description:</strong>
-  <%= @task.description %>
-</p>
-<% if @task.files? %>
-<p>Attached files</p>
-<% @task.files.each do |file| %>
-<%=link_to "File", file.url %>
-<% end %>
-<% end %>
-</div>
-<h4>Assigned users:</h4>
-<%#@user = User.all.select(:email).map(&:email) %>
-<% exclude_ids = [] %>
-<% @user_assigns = UserAssign.where(task_id: params[:id]) %>
-<% @user_assigns.each do |u| %>
-<% @user = User.where(id: u.user_id) %>
-<% puts @other_users.inspect %>
-<% @user.each do |user| %>
-<p><%= user.email %></p>
-<% exclude_ids << user.id %>
-<% end %> 
-<% end %> 
-<b>
-<h4>Assign user</h4>
-<%= form_for UserAssign.new do |f| %>
-  <div class="form-inputs">
-  	<% if @user_assigns.any? %>
-  	<%= f.select :user_id, options_from_collection_for_select(User.where('id NOT IN (:ids)', ids: exclude_ids), :id, :email) %>
-  	<% else %>
-	<%= f.select :user_id, options_from_collection_for_select(User.all, :id, :email) %>
+<% access = false %>
+<% @project = Project.where(id: current_user.id) %>
+<% @project.each do |project| %>
+	<% @tasklist = Tasklist.where(id: @task.tasklist_id) %>
+		<% @tasklist.each do |tasklist| %>
+			<% if tasklist.project_id == project.id %>
+				<% access = true %>
+			<% end %>
+		<% end %>
 	<% end %>
-  	<%= f.hidden_field :task_id, value: params[:id] %>
-    <%= f.submit %>
-  </div>
+<% if access %>
+	<p id="notice"><%= notice %></p>
+	<div class="form-inputs">
+	<h3>
+	  <strong>Name:</strong>
+	  <%= @task.name %>
+	</h3>
+
+	<p>
+	  <strong>Description:</strong>
+	  <%= @task.description %>
+	</p>
+	<% if @task.files? %>
+		<p>Attached files</p>
+		<% @task.files.each do |file| %>
+			<%=link_to "File", file.url %>
+		<% end %>
+	<% else %>
+	<p>There are no files attached to this task</p>
+	<% end %>
+	</div>
+	<% exclude_ids = [] %>
+	<% @user_assigns = UserAssign.where(task_id: params[:id]) %>
+	<% if @user_assigns.any? %>
+		<h4>Assigned users:</h4>
+		<% @user_assigns.each do |u| %>
+			<% @user = User.where(id: u.user_id) %>
+				<% @user.each do |user| %>
+				<p><%= user.email %></p>
+				<% exclude_ids << user.id %>
+				<% end %> 
+			<% end %> 
+	<% else %>
+	<h4>There are no users assigned to this task</h4>
+	<% end %>
+	<br>
+	<% if exclude_ids.size == User.count %>
+		<h4>All users assigned for this task</h4>
+	<% else %>
+		<h4>Assign user</h4>
+		<%= form_for UserAssign.new do |f| %>
+	 		<div class="form-inputs">
+	  		<% if @user_assigns.any? %>
+	  			<%= f.select :user_id, options_from_collection_for_select(User.where('id NOT IN (:ids)', ids: exclude_ids), :id, :email) %>
+	  		<% else %>
+				<%= f.select :user_id, options_from_collection_for_select(User.all, :id, :email) %>
+			<% end %>
+	  	<%= f.hidden_field :task_id, value: params[:id] %>
+	    <%= f.submit "Assign user" %>
+	  	</div>
+		<% end %>
+	<% end %>
+	<br>
+<% else %>
+	<h1>You are not allowed to visit this page</h1>   
+	<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>
 <% end %>
-<br>
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
-
-

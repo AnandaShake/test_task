@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :require_login
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # GET /tasks
@@ -59,7 +60,7 @@ class TasksController < ApplicationController
       us.destroy
     end
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
+      format.html { redirect_to projects_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
