@@ -55,6 +55,10 @@ class TasksController < ApplicationController
   # DELETE /tasks/1.json
   def destroy
     @task.destroy
+    @task_tag = TaskTag.where(task_id: params[:id])
+    @task_tag.each do |task_tag|
+      task_tag.destroy
+    end
     @user_assign = UserAssign.where(task_id: params[:id])
     @user_assign.each do |us|
       us.destroy

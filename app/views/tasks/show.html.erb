@@ -18,19 +18,31 @@
 	  <strong>Description:</strong>
 	  <%= @task.description %>
 	</p>
-	<% if @task_tag %>
+	<% if @task_tag.any? %>
 	<strong>Tags:</strong>
 	<% @task_tag.each do |task_tag| %>
 	<strong><%=task_tag.tag%></strong>
 	<% end %>
 	<% end %>
 	<% if @task.files? %>
-		<p>Attached files</p>
-		<% @task.files.each do |file| %>
-			<%=link_to "File", file.url %>
+		<p>Attached files:</p>
+		<% @task.files.each  do |file| %>
+			<%=link_to "File ", file.url %>
 		<% end %>
 	<% else %>
 	<p>There are no files attached to this task</p>
+	<%= simple_form_for @task, url: {action: :update} do |f| %>
+	<div class="form-actions">
+    <h4>Attach files</h4>
+    <div class="form-group">
+    <%= f.file_field :files, multiple: true %>
+    <%= f.hidden_field :name, value: @task.name %>
+    <%= f.hidden_field :description, value: @task.description %>
+    <%= f.hidden_field :tasklist_id, value: @task.tasklist_id %>
+    </div>
+    <%= f.submit "Add files", :class => 'btn btn-xs btn-default'%>
+  	</div>
+  	<% end %>
 	<% end %>
 	</div>
 	<% exclude_ids = [] %>
@@ -73,7 +85,7 @@
 	    <%= f.submit "Add tag" %>
 	    </div>
 	<% end %>
-<% else %>
+	<% else %>
 	<h1>You are not allowed to visit this page</h1>   
 	<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>
 <% end %>

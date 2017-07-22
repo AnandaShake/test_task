@@ -70,6 +70,10 @@ class ProjectsController < ApplicationController
         @user_assign.each do |us|
             us.destroy
         end
+        @task_tag = TaskTag.where(task_id: task.id)
+        @task_tag.each do |task_tag|
+          task_tag.destroy
+        end
         task.destroy
       end
       tasklist.destroy

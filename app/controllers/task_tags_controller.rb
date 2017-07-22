@@ -13,6 +13,9 @@ class TaskTagsController < ApplicationController
     	@task_tag = TaskTag.new
   	end
 
+  	def destroy
+  	end
+
 	private
 
 	def task_tag_params
