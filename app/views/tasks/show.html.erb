@@ -1,13 +1,10 @@
 <% access = false %>
-<% @project = Project.where(id: current_user.id) %>
-<% @project.each do |project| %>
-	<% @tasklist = Tasklist.where(id: @task.tasklist_id) %>
-		<% @tasklist.each do |tasklist| %>
-			<% if tasklist.project_id == project.id %>
-				<% access = true %>
-			<% end %>
-		<% end %>
-	<% end %>
+<% @tasklist = Tasklist.where(id: @task.tasklist_id).pluck(:project_id) %>
+<% @project = Project.where(id: @tasklist).pluck(:user_id) %>
+
+<% if @project.first == current_user.id %>
+	<% access = true %>
+<% end %>
 <% if access %>
 	<p id="notice"><%= notice %></p>
 	<div class="form-inputs">
