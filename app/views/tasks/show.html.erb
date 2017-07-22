@@ -1,6 +1,7 @@
 <% access = false %>
 <% @tasklist = Tasklist.where(id: @task.tasklist_id).pluck(:project_id) %>
 <% @project = Project.where(id: @tasklist).pluck(:user_id) %>
+<% @task_tag = TaskTag.where(task_id: params[:id]) %>
 
 <% if @project.first == current_user.id %>
 	<% access = true %>
@@ -17,6 +18,12 @@
 	  <strong>Description:</strong>
 	  <%= @task.description %>
 	</p>
+	<% if @task_tag %>
+	<strong>Tags:</strong>
+	<% @task_tag.each do |task_tag| %>
+	<strong><%=task_tag.tag%></strong>
+	<% end %>
+	<% end %>
 	<% if @task.files? %>
 		<p>Attached files</p>
 		<% @task.files.each do |file| %>
@@ -58,7 +65,7 @@
 		<% end %>
 	<% end %>
 	<br>
-	<h4>Add tags</h4>
+	<h4>Add tag</h4>
 	<%= form_for TaskTag.new do |f| %>
 	 	<div class="form-inputs">
 	  	<%= f.text_field :tag %>
