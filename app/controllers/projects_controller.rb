@@ -62,7 +62,17 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
+    @tasklist = Tasklist.where(project_id: @project.id)
+    @tasklist.each do |tasklist|
+      @task = Task.where(tasklist_id: tasklist.id)
+      @task.each do |task|
+        task.destroy
+          end
+      tasklist.destroy
+    end
     @project.destroy
+
+
     respond_to do |format|
       format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
