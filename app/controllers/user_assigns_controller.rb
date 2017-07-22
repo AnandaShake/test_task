@@ -3,7 +3,10 @@ class UserAssignsController < ApplicationController
 
 	def create
     	@user_assign = UserAssign.new(user_assign_params)
-    	@user_assign.save
+    	@task = Task.find_by_id(user_assign_params[:task_id])
+    	if @user_assign.save    		
+  			redirect_to @task 
+  		end
     end
 
 	def new

@@ -18,19 +18,26 @@
 </div>
 <h4>Assigned users:</h4>
 <%#@user = User.all.select(:email).map(&:email) %>
+<% exclude_ids = [] %>
 <% @user_assigns = UserAssign.where(task_id: params[:id]) %>
 <% @user_assigns.each do |u| %>
 <% @user = User.where(id: u.user_id) %>
+<% puts @other_users.inspect %>
 <% @user.each do |user| %>
 <p><%= user.email %></p>
+<% exclude_ids << user.id %>
 <% end %> 
 <% end %> 
 <b>
 <h4>Assign user</h4>
 <%= form_for UserAssign.new do |f| %>
   <div class="form-inputs">
+  	<% if @user_assigns.any? %>
+  	<%= f.select :user_id, options_from_collection_for_select(User.where('id NOT IN (:ids)', ids: exclude_ids), :id, :email) %>
+  	<% else %>
 	<%= f.select :user_id, options_from_collection_for_select(User.all, :id, :email) %>
-	<%= f.hidden_field :task_id, value: params[:id] %>
+	<% end %>
+  	<%= f.hidden_field :task_id, value: params[:id] %>
     <%= f.submit %>
   </div>
 <% end %>
