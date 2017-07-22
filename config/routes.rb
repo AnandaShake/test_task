@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :tasks 
   resources :user_assigns
+  resources :task_tags
 
   resources :projects do 
     resources :tasklists

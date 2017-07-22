@@ -58,6 +58,14 @@
 		<% end %>
 	<% end %>
 	<br>
+	<h4>Add tags</h4>
+	<%= form_for TaskTag.new do |f| %>
+	 	<div class="form-inputs">
+	  	<%= f.text_field :tag %>
+		<%= f.hidden_field :task_id, value: params[:id] %>
+	    <%= f.submit "Add tag" %>
+	    </div>
+	<% end %>
 <% else %>
 	<h1>You are not allowed to visit this page</h1>   
 	<%= link_to 'Back', projects_path, :class => 'btn btn-xs btn-default' %>

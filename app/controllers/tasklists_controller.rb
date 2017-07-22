@@ -25,6 +25,10 @@ class TasklistsController < ApplicationController
 		@tasklist.destroy
 		@task = Task.where(tasklist_id: params[:id]).to_a
 		@task.each do |task|
+			@user_assign = UserAssign.where(task_id: task.id)
+    		@user_assign.each do |us|
+      			us.destroy
+    		end
 			task.destroy
 		end
 		redirect_to project_path(@project)
