@@ -17,6 +17,10 @@ class TasklistsController < ApplicationController
 	
 	end
 
+	def new
+	
+	end
+
 
 
 	def destroy

@@ -21,14 +21,11 @@
 </div>
     <hr>
 <h3>New Task</h3>
-
 <%= simple_form_for(Task.new) do |f| %>
   <%= f.error_notification %>
-
   <div class="form-inputs">
     <%= f.input :name %>
     <%= f.input :description %>
-
     <%= f.hidden_field :tasklist_id, value: params[:id] %>
     <%= f.hidden_field :project_id, value: params[:project_id] %>
   </div>
