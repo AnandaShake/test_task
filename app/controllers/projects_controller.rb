@@ -66,6 +66,7 @@ class ProjectsController < ApplicationController
     @tasklist.each do |tasklist|
       @task = Task.where(tasklist_id: tasklist.id)
       @task.each do |task|
+        task.files.each {|file| file.remove!}
         @user_assign = UserAssign.where(task_id: task.id)
         @user_assign.each do |us|
             us.destroy
